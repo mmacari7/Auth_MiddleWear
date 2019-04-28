@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
     // Check for AuthCookie
     // If user is logged in with AuthCookie, render view that displays details EXCEPT PASSWORD
     // Render hyperlink to log out
-    return
+    res.render("private/private")
 })
 
 module.exports = router
