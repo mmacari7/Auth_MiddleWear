@@ -6,17 +6,29 @@ const logout = require("./logout")
 
 const constructorMethod = (app) => {
 
-    app.get("/", (req, res) => {
-        // Check authentication
-        // If user is authenticated via cookie redirect to private
-        if(req.cookies.AuthCookie){
-            res.redirect("/private")
-            return
+    // Middleware that will log the routes that are being accessed
+    app.use(function(request, response, next){
+        let curtime = new Date().toUTCString()
+        let curMethod = request.method
+        let routeReq = request.originalUrl
+        let authString = ""
+        if(request.session.loggedin){
+            authString = "(Authenticated User)"  
         }
-        // Otherwise redirect the user to the login page
         else{
-            res.redirect("/login")
-            return
+            authString = "(Non-Authenticated User)"
+        }
+        console.log('[' + curtime + ']: ' + curMethod + ' ' + routeReq + ' ' + authString)
+        next()
+    })
+
+    app.get("/", (req, res) => {
+        // Check authentication redirect to private if logged in, otherwise render the login page
+        if(req.session.loggedin === true){
+            res.redirect("/private")
+        }
+        else{
+            res.render("login/login")
         }
     })
 
@@ -26,7 +38,7 @@ const constructorMethod = (app) => {
     app.use("/private", private)
     // Provides logout route
     app.use("/logout", logout)
-    
+
     // All else send 404
     app.use("*", (req, res) => {
         // 404 Not found page if we enter invalid URL

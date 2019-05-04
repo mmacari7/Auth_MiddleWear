@@ -4,6 +4,7 @@
 const express = require("express")
 const router = express.Router()
 
+// Logs us out and clears the cookie
 router.get("/", async (req, res) => {
     res.clearCookie("AuthCookie")
     res.render("logout/logout")

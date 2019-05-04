@@ -7,6 +7,7 @@ const app = express()
 const exphbs = require("express-handlebars")
 const Handlebars = require('handlebars')
 const cookieParser = require('cookie-parser')
+const session = require("express-session")
 
 const configRoutes = require("./routes")
 
@@ -36,14 +37,13 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.engine('hbs', handlebarsInstance.engine)
 app.set('view engine', 'hbs')
 
-// //Example Middlewear on whole app
-// app.use(function(request, response, next) {
-//     if(request.cookies.test){
-//         console.log(request.cookies.test)
-//     }
-//     next()
-// })
-
+// Initialize express-session middlewear for cookie
+app.use(session({
+    name: "AuthCookie",
+    secret: 'some secret string!',
+    resave: false,
+    saveUninitialized: true
+}))
 
 configRoutes(app);
 

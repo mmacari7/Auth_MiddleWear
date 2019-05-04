@@ -5,7 +5,7 @@ module.exports = [
     {
       _id: 0,
       username: "masterdetective123",
-      hashedPassword: "$2a$16$7JKSiEmoP3GNDSalogqgPu0sUbwder7CAN/5wnvCWe6xCKAKwlTD",
+      hashedPassword: "$2a$16$7JKSiEmoP3GNDSalogqgPu0sUbwder7CAN/5wnvCWe6xCKAKwlTD.",
       firstName: "Sherlock",
       lastName: "Holmes",
       profession: "Detective",
